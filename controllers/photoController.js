@@ -6,7 +6,12 @@ const {
 class PhotoController {
   static async getPhotos(req, res) {
     try {
+      const { id } = req.UserData
+
       const data = await Photo.findAll({
+        where: {
+          UserId: id
+        },
         include: [
           {
             model: User
@@ -25,11 +30,27 @@ class PhotoController {
 
       const { id } = req.params
 
+      const { id: userId } = req.UserData
+
       const data = await Photo.findOne({
         where: {
-          id
+          id,
         }
       })
+
+      if (!data) {
+        throw{
+          code: 404,
+          message: "Data not found!"
+        }
+      }
+
+      if (data.UserId !== userId) {
+        throw{
+          code: 403,
+          message: "Forbiden"
+        }
+      } 
 
       res.status(200).json(data)
     } catch (error) {
@@ -46,10 +67,13 @@ class PhotoController {
         image_url
       } = req.body
 
+      const { id } = req.UserData
+
       const result = await Photo.create({
         title,
         caption,
-        image_url
+        image_url,
+        UserId: id
       })
      
       res.status(201).json(result)
