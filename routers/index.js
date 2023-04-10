@@ -6,6 +6,6 @@ const authentication = require("../middlewares/authentication")
 router.use("/users", userRouters)
 
 router.use(authentication)
-router.use("photos", photoRouters)
+router.use("/photos", photoRouters)
 
 module.exports = router
