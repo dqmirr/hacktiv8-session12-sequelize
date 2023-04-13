@@ -9,6 +9,10 @@ const env = process.env.NODE_ENV
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 
+app.get("/", (req, res) => {
+  res.send("Server from railway")
+})
+
 app.use("/", routers)
 
 if (env !== "test") {
