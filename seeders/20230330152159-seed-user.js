@@ -1,11 +1,20 @@
 'use strict';
 
+const { hashPassword }= require("../helpers/bcrypt")
 const data = [
   {
     username: "John Doe",
     email: "johndoe@mail.com",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    password: hashPassword("johndoe")
+  },
+  {
+    username: "admin",
+    email: "admin@admin.com",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    password: hashPassword("admin")
   }
 ]
 
